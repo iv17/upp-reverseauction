@@ -1,28 +1,24 @@
 package com.upp.reverseauction.taskservice;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.activiti.engine.ManagementService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.delegate.DelegateTask;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.upp.reverseauction.model.Company;
 import com.upp.reverseauction.model.PrivateUser;
 import com.upp.reverseauction.model.ProcurementOffer;
 import com.upp.reverseauction.repository.CompanyRepository;
 import com.upp.reverseauction.repository.PrivateUserRepository;
 import com.upp.reverseauction.util.Utils;
-import org.activiti.engine.ManagementService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.impl.pvm.PvmProcessElement;
-import org.activiti.engine.impl.pvm.delegate.ExecutionListenerExecution;
-import org.activiti.engine.runtime.Execution;
-import org.activiti.engine.runtime.Job;
-import org.activiti.engine.task.Task;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class LogisticTaskService {

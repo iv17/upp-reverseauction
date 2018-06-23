@@ -1,10 +1,11 @@
 package com.upp.reverseauction.controller;
 
-import com.upp.reverseauction.dto.CustomFormProperty;
-import com.upp.reverseauction.dto.CustomFormType;
-import com.upp.reverseauction.dto.CustomTask;
-import com.upp.reverseauction.dto.MessageDTO;
-import com.upp.reverseauction.model.PrivateUser;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.activiti.engine.FormService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
@@ -17,14 +18,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
-import javax.xml.ws.Response;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.upp.reverseauction.dto.CustomFormProperty;
+import com.upp.reverseauction.dto.CustomFormType;
+import com.upp.reverseauction.dto.CustomTask;
+import com.upp.reverseauction.dto.MessageDTO;
+import com.upp.reverseauction.model.PrivateUser;
 
 @RestController
 @RequestMapping("api/process")
@@ -78,9 +84,9 @@ public class AppController {
         identityService.setAuthenticatedUserId(user.getUsername());
         try {
             formService.submitStartFormData(pDef.getId(), params);
-            return new ResponseEntity<>(new MessageDTO("Novi proces nabavke je uspešno započet"), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDTO("New process successfully started"), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new MessageDTO("Došlo je do greške"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new MessageDTO("Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -103,7 +109,7 @@ public class AppController {
                                   @AuthenticationPrincipal PrivateUser user) {
 
         if (!canExecute(id, user.getUsername())) {
-            return new ResponseEntity<>(new MessageDTO("Ne možete izvršiti ovaj zadatak"), HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(new MessageDTO("Forbidden"), HttpStatus.FORBIDDEN);
         }
 
         Task task = taskService.createTaskQuery().taskId(id).includeTaskLocalVariables().singleResult();
@@ -128,9 +134,9 @@ public class AppController {
             } else {
                 formService.submitTaskFormData(id, params);
             }
-            return new ResponseEntity<>(new MessageDTO("Uspešno završen zadatak"), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageDTO("Task successfully executed"), HttpStatus.OK);
         }
-        return new ResponseEntity<>(new MessageDTO("Ne možete izvršiti ovaj zadatak"), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(new MessageDTO("Forbidden"), HttpStatus.FORBIDDEN);
     }
 
     @GetMapping("tasks/{id}/claim")
