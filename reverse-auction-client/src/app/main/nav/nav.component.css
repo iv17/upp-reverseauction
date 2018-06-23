@@ -1,0 +1,17 @@
+.navbar {
+    z-index: 9000 !important;
+}
+
+.navbar-primary {
+    background: linear-gradient(#0275d8,#1b82db) !important;
+}
+
+.username a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #0275d8;
+}
+
+.nav li.active {
+    border-bottom: 2px solid white; 
+}

@@ -1,0 +1,16 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse ">
+  <a class="navbar-brand" [routerLink]="['/home']"></a>
+  <ul class="nav navbar-nav navbar-right ml-auto">
+      <br/>
+    <li *ngIf="isPrivateUser" class="nav-item" [routerLinkActive]="['active']">
+      <a class="btn btn-primary" [routerLink]="['/new-instance']">New process</a>
+     
+    </li> &nbsp;
+    <li class="nav-item" [routerLinkActive]="['active']">
+      <a class="btn btn-primary" [routerLink]="['/tasks']">My tasks</a>
+    </li> &nbsp;
+    <li class="nav-item">
+      <a class="btn btn-primary" (click)="logout()" >Log out</a><br/>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,22 @@
+<form (ngSubmit)="startNewInstance()" class="col-md-6 offset-md-3">
+  <div *ngFor="let formProp of formProperties" class="form-group">
+    <label [for]="formProp.id">{{formProp.name}}</label>
+    <select *ngIf="formProp.id === 'category'" class="form-control" [id]="formProp.id" [name]="formProp.id" [(ngModel)] = "procurementDetails[formProp.id]" required>
+        <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+      </select>
+
+    <div *ngIf="formProp.id !== 'category'" [ngSwitch]="formProp.type.name">
+
+      <input *ngSwitchCase="'string'" [name]="formProp.id" [id]="formProp.id" [type]="formProp.id === 'password' ? 'password' : formProp.type.name"
+        class="form-control" [(ngModel)]="procurementDetails[formProp.id]">
+
+      <input *ngSwitchCase="'boolean'" [name]="formProp.id" [id]="formProp.id" [type]="'checkbox'" class="form-control" [checked]="procurementDetails[formProp.id]"
+        (change)="procurementDetails[formProp.id] = !procurementDetails[formProp.id]">
+
+      <input *ngSwitchCase="'long'" [name]="formProp.id" [id]="formProp.id" [type]="'number'" class="form-control" [(ngModel)]="procurementDetails[formProp.id]">
+
+      <input *ngSwitchCase="'date'" [name]="formProp.id" [id]="formProp.id" [type]="'date'" class="form-control" [(ngModel)]="procurementDetails[formProp.id]"/>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary float-right">Create</button>
+</form>

@@ -1,0 +1,11 @@
+.login-page-content {
+    height: 100%;
+}
+.login-form {
+    border: 2px solid #e1e1e1;
+    padding-top: 3%;
+    padding-bottom: 10%;
+    background: white;
+    color: #1b7dc2;
+    height: 100%;
+}

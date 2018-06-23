@@ -1,0 +1,37 @@
+<div *ngIf="isFetched" class="task-content">
+  <div class="task-title">
+    <div class="row">
+      <h3>{{task.name}}</h3>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <form *ngIf="task.formKey !== 'company-executor'" class="col-md-6" (submit)="completeTask()">
+      <div *ngFor="let formProp of task.props" class="form-group">
+        <label *ngIf="formProp.type.name !== 'boolean'" [for]="formProp.id">{{formProp.name}}</label>
+        <div [ngSwitch]="formProp.type.name">
+
+          <input *ngSwitchCase="'string'" [name]="formProp.id" [id]="formProp.id" [type]="formProp.id === 'password' ? 'password' : formProp.type.name"
+            class="form-control" [(ngModel)]="taskDetails[formProp.id]" [hidden]="!formProp.readable" [disabled]="!formProp.writable">
+
+          <div *ngSwitchCase="'boolean'" class="form-check">
+            <label class="form-check-label">
+              <input [name]="formProp.id" [id]="formProp.id" [type]="'checkbox'" class="form-check-label" [checked]="taskDetails[formProp.id]"
+                (change)="taskDetails[formProp.id] = !taskDetails[formProp.id]"> {{formProp.name}}
+            </label>
+          </div>
+
+          <input *ngSwitchCase="'long'" [name]="formProp.id" [id]="formProp.id" [type]="'number'" class="form-control" [(ngModel)]="taskDetails[formProp.id]">
+
+          <input *ngSwitchCase="'date'" [name]="formProp.id" [id]="formProp.id" [type]="'date'" class="form-control" [(ngModel)]="taskDetails[formProp.id]"
+          />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary float-right">Complete task</button>
+    </form>
+    <div *ngIf="task.formKey === 'company-executor'">
+      <app-choose-company-task [offers]="task.localVariables.offers" (onTaskCompleted)="completeTask($event)"></app-choose-company-task>
+    </div>
+  </div>
+</div>

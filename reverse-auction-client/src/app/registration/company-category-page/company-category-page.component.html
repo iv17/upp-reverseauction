@@ -1,0 +1,64 @@
+<div class="registration-page-content">
+  <div class="registration-form">
+    <div class="col-md-8 offset-md-2" >
+      <div *ngIf="isDoneLoading">
+        <form (ngSubmit)="confirm()">
+          <div *ngFor="let formProp of formProperties" class="form-group">
+            <div *ngIf="formProp.type.name == 'string' && !formProp.writable">
+              <div class="alert alert-danger" role="alert">
+                <strong>{{formProp.value}}</strong>
+              </div>
+            </div>
+            <div *ngIf="formProp.writable">
+              <label [for]="formProp.id">{{formProp.name}}</label>
+              <div [ngSwitch]="formProp.type.name">
+
+                <input *ngSwitchCase="'string'" [name]="formProp.id" [id]="formProp.id" [type]="formProp.id === 'password' ? 'password' : formProp.type.name"
+                  class="form-control" [(ngModel)]="companyDetails[formProp.id]">
+
+                <input *ngSwitchCase="'long'" [name]="formProp.id" [id]="formProp.id" [type]="number" class="form-control" [(ngModel)]="companyDetails[formProp.id]">
+
+                <input *ngSwitchCase="'boolean'" [name]="formProp.id" [id]="formProp.id" [type]="'checkbox'" class="form-control" [checked]="registrationDetails[formProp.id]"
+                  (change)="confirmationDetails[formProp.id] = !companyDetails[formProp.id]">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-6">
+                  <label>Izaberite kategorije poslovanja</label>
+                  <div class="categories-choice">
+                    <ul>
+                      <li *ngFor='let category of categories' class="row">
+                        <span class="col-md-6">{{category.name}}</span>
+                        <span class="col-md-6">
+                          <button type="button" class="btn btn-primary float-right" (click)="addCategory(category.id)">Add</button>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <label>Izabrane kategorije poslovanja</label>
+                  <div class="categories-choice">
+                    <ul>
+                      <li *ngFor='let category of chosenCategories' class="row">
+                        <span class="col-md-6">{{category.name}}</span>
+                        <span class="col-md-6">
+                          <button type="button" class="btn btn-primary float-right" (click)="removeCategory(category.id)">Remove</button>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+          </div>
+         
+          <br/> <br/> <br/> <br/> <br/> <br/><hr/>
+          <div class="col-lg-6">
+              <button type="submit" class="btn btn-primary float-right">Register</button>
+          </div>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+.content {
+    margin: 20px 20px 20px 300px; /* Same as the width of the sidenav */
+    padding: 0px 10px;
+    background: white;
+  
+    height: 530px;
+}

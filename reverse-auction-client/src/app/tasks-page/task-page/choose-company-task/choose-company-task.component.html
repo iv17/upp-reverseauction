@@ -1,0 +1,47 @@
+
+<div class="container">
+   
+    	<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="pull-right">
+							<span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
+								<i class="glyphicon glyphicon-filter"></i>
+							</span>
+						</div>
+					</div>
+					<div class="panel-body">
+						<input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
+					</div>
+          <table border="1" >
+              <thead>
+                <th>Kompanija</th>
+                <th>Cena</th>
+                <th>Rok izvršavanja</th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let offer of offers; let i = index">
+                  <td>{{offer.owner.agent.name}}</td>
+                  <td>{{offer.charge}}</td>
+                  <td>{{offer.performDueDate | date}}</td>
+                  <td><button class="btn btn-primary" (click)="selectCompany(i)">Choose</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <div>
+              <span>Izabrali ste ponudu kompanije {{chosenCompanyName}}</span>
+            </div>
+            <br><hr>
+            <div class="col-lg-6">
+            <button class="btn btn-primary float-right" (click)="completeTask()">Complete task</button>
+            </div>
+       
+				</div>
+			</div>
+
+		</div>
+	</div>
+      

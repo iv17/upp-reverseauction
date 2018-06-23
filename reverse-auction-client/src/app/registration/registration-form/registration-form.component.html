@@ -1,0 +1,18 @@
+<form (ngSubmit)="register()">
+  <div *ngFor="let formProp of formProperties" class="form-group">
+    <label *ngIf="formProp.type.name !== 'boolean'" [for]="formProp.id">{{formProp.name}}</label>
+    <div [ngSwitch]="formProp.type.name">
+
+      <input *ngSwitchCase="'string'" [name]="formProp.id" [id]="formProp.id" [type]="formProp.id === 'password' ? 'password' : formProp.type.name"
+        class="form-control" [(ngModel)]="registrationDetails[formProp.id]" [hidden]="!formProp.readable">
+
+      <div *ngSwitchCase="'boolean'" class="form-check">
+        <label class="form-check-label">
+          <input [name]="formProp.id" [id]="formProp.id" [type]="'checkbox'" class="form-check-label" [checked]="registrationDetails[formProp.id]"
+            (change)="registrationDetails[formProp.id] = !registrationDetails[formProp.id]"> {{formProp.name}}
+        </label>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary float-right">Registruj se</button>
+</form>
